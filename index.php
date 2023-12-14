@@ -1,6 +1,6 @@
 <?php
 ob_start();
-require __DIR__."/vendor/autoload.php";
+require __DIR__ . "/vendor/autoload.php";
 
 /**
  * BOOTSTRAP
@@ -49,12 +49,14 @@ $route->get("/termos", "Web@terms");
 
 
 /**
- * APP
+ * DOCUMENT
  */
 
-$route->group("/app");
-$route->get("/", "App@home");
-$route->get("/sair", "App@logout");
+$route->group("/documentos");
+$route->get("/novo-registro", "Document@register");
+$route->get("/buscar", "Document@search");
+$route->get("/buscar/p/{page}", "Document@search");
+
 
 /**
  * ERROR ROUTES [400, 404,405, 501]
@@ -71,7 +73,7 @@ $route->dispatch();
 /**
  * ERROR REDIRECT
  */
-if($route->error()){
+if ($route->error()) {
     $route->redirect("/ops/{$route->error()}");
 }
 

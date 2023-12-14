@@ -6,7 +6,7 @@
 
 2. Objetivo do projeto:
 
-   `A Aplicação responsável por criar, organizar e gerenciar tipos de documentos como memorando, ofícios e etc.`
+   `A Aplicação é responsável por criar, organizar e gerenciar tipos de documentos como memorando, ofícios e etc.`
 
 3. Instituição solicitante do projeto:
 

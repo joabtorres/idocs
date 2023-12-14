@@ -44,13 +44,7 @@ class Web extends Controller
             theme("/assets/images/share.jpg")
         );
         echo $this->view->render("home", [
-            "head" => $head,
-            "video" => "V6Qvhl5YAFw",
-            "blog" => (new Post())
-                ->find()
-                ->order("post_at DESC")
-                ->limit(6)
-                ->fetch(true)
+            "head" => $head
         ]);
     }
 
@@ -188,10 +182,10 @@ class Web extends Controller
             "c={$category->id}"
         );
         $page = (!empty($data['page']))
-        && filter_var(
-            $data['page'],
-            FILTER_VALIDATE_INT
-        ) >= 1 ? $data['page'] : 1;
+            && filter_var(
+                $data['page'],
+                FILTER_VALIDATE_INT
+            ) >= 1 ? $data['page'] : 1;
         $pager = new Pager(url("/blog/em/{$category->uri}/"));
         $pager->pager($blogCategory->count(), 9, $page);
 
@@ -213,10 +207,10 @@ class Web extends Controller
                 "title" => "Artigos em {$category->title}",
                 "desc" => $category->description,
                 "blog" => $blogCategory
-                ->limit($pager->limit())
-                ->offset($pager->offset())
-                ->order("post_at DESC")
-                ->fetch(true),
+                    ->limit($pager->limit())
+                    ->offset($pager->offset())
+                    ->order("post_at DESC")
+                    ->fetch(true),
                 "paginator" => $pager->render()
             ]
         );
@@ -387,8 +381,7 @@ class Web extends Controller
                 $code,
                 $data['password'],
                 $data['password_re']
-            )
-            ) {
+            )) {
                 $this->message->success(
                     "Senha alterada com sucesso. Vamos controlar?"
                 )->flash();

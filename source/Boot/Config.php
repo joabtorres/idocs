@@ -1,27 +1,29 @@
 <?php
+
 /**
  * DATABASE
  */
 define("CONF_DB_HOST", "localhost");
 define("CONF_DB_USER", "root");
 define("CONF_DB_PASS", "");
-define("CONF_DB_NAME", "fullstackphp");
+define("CONF_DB_NAME", "idocs");
 
 /**
  * PROJECT URLs
  */
-define("CONF_URL_BASE", "https://www.cafecontroll.com.br");
-define("CONF_URL_TEST", "https://www.localhost/fsphp");
+define("CONF_URL_BASE", "https://www.idocs.com.br");
+define("CONF_URL_TEST", "https://www.localhost/idocs");
 define("CONF_URL_ADMIN", "/admin");
 
 /**
  * SITE
  */
-define("CONF_SITE_NAME", "CaféControl");
-define("CONF_SITE_TITLE", "Gerencie suas contas com o melhor café");
-define("CONF_SITE_DESC", "O CafeControl é um gerenciador de contas simples, poderoso e gratuito. O prazer de tomar um café e ter o controle total de suas contas.");
+define("CONF_SITE_NAME", "iDocs");
+define("CONF_SITE_VERSION", "1.0");
+define("CONF_SITE_TITLE", "Gerencie seus documentos de forma simples e fácil");
+define("CONF_SITE_DESC", "A Aplicação é responsável por criar, organizar e gerenciar tipos de documentos como memorando, ofícios e etc em ordem númerica crescente.");
 define("CONF_SITE_LANG", "pt_BR");
-define("CONF_SITE_DOMAIN", "upinside.com.br");
+define("CONF_SITE_DOMAIN", "idocs.com.br");
 define("CONF_SITE_ADDR_STREET", "Tv. Amapa");
 define("CONF_SITE_ADDR_NUMBER", "4");
 define("CONF_SITE_ADDR_COMPLEMENT", "Quadra E1 Lote 4");
@@ -33,12 +35,12 @@ define("CONF_SITE_ADDR_ZIPCODE", "68744-460");
 /**
  * SOCIAL
  */
-define("CONF_SOCIAL_TWITTER_CREATOR", "@robsonvleite");
-define("CONF_SOCIAL_TWITTER_PUBLISHER", "@robsonvleite");
-define("CONF_SOCIAL_FACEBOOK_APP", "robsonvleite");
-define("CONF_SOCIAL_FACEBOOK_PAGE", "upinside");
-define("CONF_SOCIAL_INSTAGRAM_PAGE", "upinside");
-define("CONF_SOCIAL_YOUTUBE_PAGE", "upinside");
+define("CONF_SOCIAL_TWITTER_CREATOR", "");
+define("CONF_SOCIAL_TWITTER_PUBLISHER", "");
+define("CONF_SOCIAL_FACEBOOK_APP", "");
+define("CONF_SOCIAL_FACEBOOK_PAGE", "");
+define("CONF_SOCIAL_INSTAGRAM_PAGE", "");
+define("CONF_SOCIAL_YOUTUBE_PAGE", "");
 
 /**
  * DATES
@@ -68,8 +70,7 @@ define("CONF_MESSAGE_ERROR", "error icon-warning");
  */
 define("CONF_VIEW_PATH", __DIR__ . "/../../shared/views");
 define("CONF_VIEW_EXT", "php");
-define("CONF_VIEW_THEME","cafeweb");
-define("CONF_VIEW_APP","app");
+define("CONF_VIEW_THEME", "idocs");
 
 /**
  * UPLOAD
@@ -93,10 +94,10 @@ define("CONF_MAIL_HOST", "smtp.sendgrid.net");
 define("CONF_MAIL_PORT", "587");
 define("CONF_MAIL_USER", "apikey");
 define("CONF_MAIL_PASS", "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");
-define("CONF_MAIL_SENDER", ["name"=>"Joab T. Alencar", "address"=>"contato@joabtorres.com.br"]);
+define("CONF_MAIL_SENDER", ["name" => "Joab T. Alencar", "address" => "contato@joabtorres.com.br"]);
 define("CONF_MAIL_SUPPORT", "contato@joabtorres.com.br");
 define("CONF_MAIL_OPTION_LANG", "br");
-define("CONF_MAIL_OPTION_HTML",true);
+define("CONF_MAIL_OPTION_HTML", true);
 define("CONF_MAIL_OPTION_AUTH", true);
 define("CONF_MAIL_OPTION_SECURE", "tls");
 define("CONF_MAIL_OPTION_CHARSET", "utf-8");
