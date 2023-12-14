@@ -6,6 +6,7 @@ use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Models\Auth;
 use Source\Models\Category;
+use Source\Models\Company;
 use Source\Models\Faq\Question;
 use Source\Models\Post;
 use Source\Models\User;
@@ -45,208 +46,6 @@ class Web extends Controller
         );
         echo $this->view->render("home", [
             "head" => $head
-        ]);
-    }
-
-    /**
-     * SITE SOBRE
-     *
-     * @return void
-     */
-    public function about(): void
-    {
-        $head = $this->seo->render(
-            "Descubra o " . CONF_SITE_NAME . " - " . CONF_SITE_DESC,
-            CONF_SITE_DESC,
-            url("/sobre"),
-            theme("/assets/images/share.jpg")
-        );
-        echo $this->view->render("about", [
-            "head" => $head,
-            "video" => "V6Qvhl5YAFw",
-            "faq" => (new Question())
-                ->find("channel_id=:id", "id=1", "question, response")
-                ->order("order_by")
-                ->fetch(true)
-        ]);
-    }
-
-
-    /**
-     * SITE blog
-     *
-     * @return void
-     */
-    public function blog(?array $data): void
-    {
-        $head = $this->seo->render(
-            "Blog - " . CONF_SITE_NAME,
-            "Confira em nosso blog dicas e sacadas de como controlar melhor suas contas. Vamos tomar um café? ",
-            url("/blog"),
-            theme("/assets/images/share.jpg")
-        );
-        $blog = (new Post())->find();
-        $pager = new Pager(url("/blog/p/"));
-        $pager->pager($blog->count(), 9, ($data['page'] ?? 1));
-        echo $this->view->render("blog", [
-            "head" => $head,
-            "blog" => $blog->limit($pager->limit())->offset($pager->offset())
-                ->fetch(true),
-            "paginator" => $pager->render()
-        ]);
-    }
-
-    /**
-     * SITE BLOG SEARCH
-     *
-     * @param array $data
-     *
-     * @return void
-     */
-    public function blogSearch(array $data): void
-    {
-        if (!empty($data["s"])) {
-            $search = filter_var($data['s'], FILTER_SANITIZE_SPECIAL_CHARS);
-            echo json_encode(["redirect" => url("/blog/buscar/{$search}/1")]);
-            return;
-        }
-
-
-        if (empty($data['terms'])) {
-            redirect("/blog");
-        }
-        $search = filter_var($data["terms"], FILTER_SANITIZE_SPECIAL_CHARS);
-        $page = (filter_var($data['page'], FILTER_VALIDATE_INT) >= 1
-            ? $data['page'] : 1);
-
-        $head = $this->seo->render(
-            "Pesquisa por {$search} - " . CONF_SITE_NAME,
-            "Confira os resultados de sua pesquisa par {$search}",
-            url("/blog/buscar/{$search}/{$page}"),
-            theme("assets/images/share.jpg")
-        );
-
-        $blogSearch = (new Post())
-            ->find("MATCH(title, subtitle) AGAINST(:s)", "s={$search}");
-        if (!$blogSearch->count()) {
-            echo $this->view->render(
-                "blog",
-                [
-                    "head" => $head,
-                    "title" => "PESQUISA POR: ",
-                    "search" => $search
-                ]
-            );
-            return;
-        }
-
-        $pager = new Pager(url("/blog/buscar/{$search}/"));
-        $pager->pager($blogSearch->count(), 9, $page);
-
-        echo $this->view->render(
-            "blog",
-            [
-                "head" => $head,
-                "title" => "PESQUISA POR: ",
-                "search" => $search,
-                "blog" => $blogSearch->limit($pager->limit())
-                    ->offset($pager->offset())
-                    ->fetch(true),
-                "paginator" => $pager->render()
-            ]
-        );
-    }
-
-    /**
-     *
-     * SITE BLOG CATEGORY
-     *
-     * @param array $data
-     *
-     * @return void
-     */
-    public function blogCategory(array $data): void
-    {
-        $categoryUri = filter_var(
-            $data['category'],
-            FILTER_SANITIZE_SPECIAL_CHARS
-        );
-        $category = (new Category())->findByUri($categoryUri);
-
-        if (!$category) {
-            redirect("/blog");
-        }
-
-        $blogCategory = (new Post())->find(
-            "category = :c",
-            "c={$category->id}"
-        );
-        $page = (!empty($data['page']))
-            && filter_var(
-                $data['page'],
-                FILTER_VALIDATE_INT
-            ) >= 1 ? $data['page'] : 1;
-        $pager = new Pager(url("/blog/em/{$category->uri}/"));
-        $pager->pager($blogCategory->count(), 9, $page);
-
-        $head = $this->seo->render(
-            "Artigos em {$category->title} - " . CONF_SITE_NAME,
-            $category->description,
-            url("/blog/em/{$category->uri}/{$page}"),
-            ($category->cover
-                ? image($category->cover, 1200, 628)
-                : theme(
-                    "/assets/image/share.jpg"
-                ))
-        );
-
-        echo $this->view->render(
-            "blog",
-            [
-                "head" => $head,
-                "title" => "Artigos em {$category->title}",
-                "desc" => $category->description,
-                "blog" => $blogCategory
-                    ->limit($pager->limit())
-                    ->offset($pager->offset())
-                    ->order("post_at DESC")
-                    ->fetch(true),
-                "paginator" => $pager->render()
-            ]
-        );
-    }
-
-    /**
-     * SITE blogPost
-     *
-     * @return void
-     */
-    public function blogPost(?array $data): void
-    {
-        $post = (new Post())->findByUri($data['uri']);
-        if (!$post) {
-            redirect("/404");
-        }
-        $post->views += 1;
-        $post->save();
-
-        $head = $this->seo->render(
-            "{$post->title}} - " . CONF_SITE_NAME,
-            $post->subtitle,
-            url("/blog/{$post->uri}"),
-            image($post->cover, 1200, 628)
-        );
-        echo $this->view->render("blog-post", [
-            "head" => $head,
-            "post" => $post,
-            "related" => (new Post())
-                ->find(
-                    "category=:c AND id!=:i",
-                    "c={$post->category}&i={$post->id}"
-                )
-                ->order("rand()")
-                ->limit(3)
-                ->fetch(true)
         ]);
     }
 
@@ -294,7 +93,7 @@ class Web extends Controller
             url("/entrar"),
             theme("/assets/images/share.jpg")
         );
-        echo $this->view->render("auth-login", [
+        echo $this->view->render("auth/auth-login", [
             "head" => $head,
             "cookie" => filter_input(INPUT_COOKIE, "authEmail")
         ]);

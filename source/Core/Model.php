@@ -64,7 +64,9 @@ abstract class Model
         array $required
     ) {
         self::$entity = $entity;
-        self::$protected = array_merge($protected, ['created_at', "updated_at"]
+        self::$protected = array_merge(
+            $protected,
+            ['created_at', "updated_at"]
         );
         self::$required = $required;
 
@@ -269,7 +271,7 @@ abstract class Model
 
             $stmt = Connect::getInstance()->prepare(
                 "INSERT INTO " . static::$entity
-                . " ({$columns}) VALUES ({$values})"
+                    . " ({$columns}) VALUES ({$values})"
             );
             $stmt->execute($this->filter($data));
 

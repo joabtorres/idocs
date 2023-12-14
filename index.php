@@ -17,17 +17,6 @@ $route = new Router(url(), "@");
  */
 $route->namespace("Source\App");
 $route->get("/", "Web@home");
-$route->get("/sobre", "Web@about");
-
-//blog
-$route->group("/blog");
-$route->get("/", "Web@blog");
-$route->get("/p/{page}", "Web@blog");
-$route->get("/{uri}", "Web@blogPost");
-$route->post("/buscar", "Web@blogSearch");
-$route->get("/buscar/{terms}/{page}", "Web@blogSearch");
-$route->get("/em/{category}/", "Web@blogCategory");
-$route->get("/em/{category}/{page}", "Web@blogCategory");
 
 //auth
 $route->group(null);
@@ -40,19 +29,17 @@ $route->post("/recuperar", "Web@forget");
 $route->get("/recuperar/{code}", "Web@reset");
 $route->post("/recuperar/resetar", "Web@reset");
 
-//options
-$route->get("/confirma", "Web@confirm");
-$route->get("/obrigado/{email}", "Web@success");
-
-//services
-$route->get("/termos", "Web@terms");
-
+/**
+ * COMPANY ROUTES
+ */
+$route->group("/instituicao");
+$route->get("/consultar", "Company@search");
 
 /**
- * DOCUMENT
+ * DOCUMENT ROUTES
  */
 
-$route->group("/documentos");
+$route->group("/documento");
 $route->get("/novo-registro", "Document@register");
 $route->get("/buscar", "Document@search");
 $route->get("/buscar/p/{page}", "Document@search");

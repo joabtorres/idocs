@@ -19,7 +19,9 @@ class User extends Model
     public function __construct()
     {
         parent::__construct(
-            "users", ["id"], ["first_name", "last_name", "email", "password"]
+            "users",
+            ["id"],
+            ["sectors_id", "first_name", "last_name", "email", "password"]
         );
     }
 
@@ -37,13 +39,13 @@ class User extends Model
         string $lastName,
         string $email,
         string $password,
-        string $document = null
+        string $avatar = null
     ): User {
         $this->first_name = $firstName;
         $this->last_name = $lastName;
         $this->email = $email;
         $this->password = $password;
-        $this->document = $document;
+        $this->avatar = $avatar;
         return $this;
     }
 
@@ -57,8 +59,7 @@ class User extends Model
      */
     public function findByEmail(string $email, string $columns = "*"): ?User
     {
-        return $this->find("email = :email", "email={$email}", $columns)->fetch(
-        );
+        return $this->find("email = :email", "email={$email}", $columns)->fetch();
     }
 
 
@@ -70,19 +71,19 @@ class User extends Model
     public function save(): bool
     {
         if (!$this->required()) {
-            $this->message->warning( "Nome, sobrenome, email e senha são obrigatórios");
+            $this->message->warning("Nome, sobrenome, email e senha são obrigatórios");
             return false;
         }
 
         if (!is_email($this->email)) {
-            $this->message->warning("O e-mail informado não tem um formato válido" );
+            $this->message->warning("O e-mail informado não tem um formato válido");
             return false;
         }
 
         if (!is_passwd($this->password)) {
             $min = CONF_PASSWD_MIN_LEN;
             $max = CONF_PASSWD_MAX_LEN;
-            $this->message->warning( "A senha deve ter entre {$min} e {$max} caracteres" );
+            $this->message->warning("A senha deve ter entre {$min} e {$max} caracteres");
             return false;
         } else {
             $this->password = passwd($this->password);
@@ -96,8 +97,7 @@ class User extends Model
                 "email = :e AND id != :i",
                 "e={$this->email}&i={$userId}",
                 "id"
-            )->fetch()
-            ) {
+            )->fetch()) {
                 $this->message->warning("O e-mail informado já está cadastrado");
                 return false;
             }
@@ -116,7 +116,7 @@ class User extends Model
         /** User Create */
         if (empty($this->id)) {
             if ($this->findByEmail($this->email, "id")) {
-                $this->message->warning( "O e-mail informado já está cadastrado"  );
+                $this->message->warning("O e-mail informado já está cadastrado");
                 return false;
             }
 
@@ -129,5 +129,12 @@ class User extends Model
 
         $this->data = ($this->findById($userId))->data();
         return true;
+    }
+
+    public function sector(): ?Sector
+    {
+        if ($this->sectors_id) {
+            return (new Sector())->findById($this->sectors_id);
+        }
     }
 }

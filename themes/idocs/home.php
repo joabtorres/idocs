@@ -255,6 +255,9 @@
 </div>
 <!-- /#section-container -->
 
-
-<script src="<?php echo 'BASE_URL' ?>assets/js/chart/chart.min.js"></script>
-<script src="<?php echo 'BASE_URL' ?>assets/js/graficos.js"></script>
+<?php
+$this->start("scripts"); ?>
+<script src="<?= theme("../../shared/js/chart/chart.min.js") ?>"></script>
+<script src="<?= theme("assets/js/charts.js") ?>"></script>
+<?php
+$this->end(); ?>

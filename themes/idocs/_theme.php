@@ -4,38 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
     <?= $head ?>
-
     <link rel="icon" type="image/gif" href="<?= theme("assets/image/icon.png") ?>" sizes="32x32" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="<?= theme("assets/css/bootstrap/bootstrap.min.css") ?>">
-    <!--fontawesome-free-->
-    <link rel="stylesheet" href="<?= theme("assets/css/fontawesome/fontawesome.min.css") ?>">
-    <!--fontawesome-free regular-->
-    <link rel="stylesheet" href="<?= theme("assets/css/fontawesome/regular.min.css") ?>">
-    <!--fontawesome-free brands-->
-    <link rel="stylesheet" href="<?= theme("assets/css/fontawesome/brands.min.css") ?>">
-    <!--fontawesome-free solid-->
-    <link rel="stylesheet" href="<?= theme("assets/css/fontawesome/solid.min.css") ?>">
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="<?= theme("assets/css/mCustomScrollbar.min.css") ?>">
-    <!-- Date datepicker CSS -->
-    <link rel="stylesheet" href="<?= theme("assets/css/jquery-ui/jquery-ui.min.css") ?>">
-    <!-- Our Date datepicker 2 -->
-    <link rel="stylesheet" href="<?= theme("assets/css/select2/select2.min.css") ?>">
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="<?= theme("assets/css/style.css") ?>">
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="<?= theme("assets/js/jquery-3.1.1.min.js") ?>"></script>
-    <!-- Date datepicker JS -->
-    <script src="<?= theme("assets/js/jquery-ui/jquery-ui.min.js") ?>"></script>
-    <!-- select2 JS -->
-    <script defer src="<?= theme("assets/js/select2/select2.min.js") ?>"></script>
+    <link rel="stylesheet" href="<?= theme("assets/styles_minify.css") ?>">
     <script>
         base_url = "<?= url() ?>";
     </script>
@@ -43,7 +17,12 @@
 </head>
 
 <body>
-
+    <div class="ajax_load">
+        <div class="ajax_load_box">
+            <div class="ajax_load_box_circle"></div>
+            <p class="ajax_load_box_title">Aguarde, carregando...</p>
+        </div>
+    </div>
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
@@ -65,15 +44,15 @@
                             <a href="#sidebarDocument" data-toggle="collapse" aria-expanded="false"><i class="fas fa-angle-double-right"></i> Documentos</a>
                             <ul class="collapse list-unstyled" id="sidebarDocument">
                                 <li>
-                                    <a href="<?= url('documentos/novo-registro') ?>"><i class="fas fa-plus-square"></i> Novo
+                                    <a href="<?= url('documento/novo-registro') ?>"><i class="fas fa-plus-square"></i> Novo
                                         Registro</a>
                                 </li>
                                 <li>
-                                    <a href="<?= url('documentos/buscar') ?>"><i class="fas fa-tasks"></i> Consultar
+                                    <a href="<?= url('documento/buscar') ?>"><i class="fas fa-tasks"></i> Consultar
                                         Protocolos</a>
                                 </li>
                                 <li>
-                                    <a href="<?= url('documentos/grafico') ?>"><i class="fa-solid fa-chart-column"></i> Gráfico de
+                                    <a href="<?= url('documento/grafico') ?>"><i class="fa-solid fa-chart-column"></i> Gráfico de
                                         Documentos</a>
                                 </li>
                             </ul>
@@ -181,12 +160,8 @@
     </div>
 
     <div class="overlay"></div>
-    <!-- Bootstrap JS -->
-    <script src="<?= theme("assets/js/bootstrap/bootstrap.min.js") ?>"></script>
-    <script src="<?= theme("assets/js/maskedinput/jquery.maskedinput.min.js") ?>"></script>
-    <!-- jQuery Custom Scroller CDN -->
-    <script src="<?= theme("assets/js/mCustomScrollbar.min.js") ?>"></script>
-    <script src="<?= theme("assets/js/script.js") ?>"></script>
+    <script src="<?= theme("/assets/scripts_minify.js"); ?>"></script>
+    <?= $this->section("scripts"); ?>
 </body>
 
 </html>
