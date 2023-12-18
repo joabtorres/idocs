@@ -48,7 +48,7 @@
                                         Registro</a>
                                 </li>
                                 <li>
-                                    <a href="<?= url('documento/buscar') ?>"><i class="fas fa-tasks"></i> Consultar
+                                    <a href="<?= url('documento/consultar') ?>"><i class="fas fa-tasks"></i> Consultar
                                         Protocolos</a>
                                 </li>
                                 <li>
@@ -61,15 +61,15 @@
                             <a href="#sidebarUser" data-toggle="collapse" aria-expanded="false"><i class="fas fa-angle-double-right"></i> Usuários</a>
                             <ul class="collapse list-unstyled" id="sidebarUser">
                                 <li>
-                                    <a href="admin_docs/cadastro"><i class="fa-solid fa-user-plus"></i>
+                                    <a href="usuario/novo-registro"><i class="fa-solid fa-user-plus"></i>
                                         Novo Registro</a>
                                 </li>
                                 <li>
-                                    <a href="admin_docs/consultar"><i class="fas fa-tasks"></i> Consultar
+                                    <a href="usuario/consultar"><i class="fas fa-tasks"></i> Consultar
                                         Usuários</a>
                                 </li>
                                 <li>
-                                    <a href="admin_docs/consultar"><i class="fa-solid fa-user-pen"></i> Editar
+                                    <a href="usuario/editar"><i class="fa-solid fa-user-pen"></i> Editar
                                         Perfil</a>
                                 </li>
                             </ul>
@@ -78,25 +78,25 @@
                             <a href="#sidebarSettings" data-toggle="collapse" aria-expanded="false"><i class="fas fa-angle-double-right"></i> Configurações</a>
                             <ul class="collapse list-unstyled" id="sidebarSettings">
                                 <li>
-                                    <a href="fisc_denuncia/cadastro"><i class="fa-solid fa-hotel"></i>
+                                    <a href="<?= url("instituicao") ?>"><i class="fa-solid fa-hotel"></i>
                                         Instituição</a>
                                 </li>
                                 <li>
-                                    <a href="fisc_solicitacao/cadastro"><i class="fa-solid fa-sitemap"></i>
+                                    <a href="<?= url("setores") ?>"><i class="fa-solid fa-sitemap"></i>
                                         Setores</a>
                                 </li>
                                 <li>
-                                    <a href="fisc_denuncia/consultar"><i class="fa-solid fa-paste"></i>
+                                    <a href="<?= url("/tipos-de-documentos") ?>"><i class="fa-solid fa-paste"></i>
                                         Tipos de Documentos</a>
                                 </li>
                                 <li>
-                                    <a href="fisc_solicitacao/consultar"><i class="fa-solid fa-swatchbook"></i>
+                                    <a href="<?= url("/statuss-para-documentos") ?>"><i class="fa-solid fa-swatchbook"></i>
                                         Status para Documentos</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="usuario/sair"><i class="fa fa-sign-out-alt"></i> Sair</a>
+                            <a href="<?= url("/sair") ?>"><i class="fa fa-sign-out-alt"></i> Sair</a>
                         </li>
                     </ul>
                 </div>
@@ -127,7 +127,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user text-primary"></i>
-                                    Joab Torres Alencar
+                                    <?= ("{$user->first_name} {$user->last_name}" ?? "") ?>
                                     <b class="caret"></b>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

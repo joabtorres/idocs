@@ -10,6 +10,7 @@
    --color-gray: #f5f5f5;
    --secoundary: #4d6073;
    --success: #28a745;
+   --index-modal: 1051;
 }
 
 html,
@@ -22,7 +23,6 @@ hmtl,
 body {
    height: 100%;
 }
-
 
 /*DEFAULT LOAD*/
 .ajax_load {
@@ -40,13 +40,13 @@ body {
    margin: auto;
    text-align: center;
    color: #ffffff;
-   font-weight: var(--weight-bold);
+   font-weight: 700;
    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 .ajax_load_box_circle {
    border: 16px solid #e3e3e3;
-   border-top: 16px solid var(--hover-color-green);
+   border-top: 16px solid var(--color-blue-strong);
    border-radius: 50%;
    margin: auto;
    width: 80px;
@@ -56,6 +56,25 @@ body {
    -o-animation: spin 1.2s linear infinite;
    animation: spin 1.2s linear infinite;
 }
+
+@-webkit-keyframes spin {
+   0% {
+       -webkit-transform: rotate(0deg);
+   }
+   100% {
+       -webkit-transform: rotate(360deg);
+   }
+}
+
+@keyframes spin {
+   0% {
+       transform: rotate(0deg);
+   }
+   100% {
+       transform: rotate(360deg);
+   }
+}
+
 
 body {
    background: --color-gray;
@@ -90,8 +109,8 @@ body {
 .btn-primary:active,
 .btn-dark:hover,
 .btn-primary:hover {
-   border-color: var(--color-primary-strong);
-   background-color: var(--color-primary-strong) !important;
+   border-color: var(--color-primary-median);
+   background-color: var(--color-primary-median) !important;
    color: var(--color-white);
 }
 

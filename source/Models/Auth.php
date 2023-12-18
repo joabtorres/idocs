@@ -179,7 +179,7 @@ class Auth extends Model
             );
             return false;
         }
-        if ($user->forget == $code) {
+        if ($user->forget != $code) {
             $this->message->error(
                 "Desculpe, mas o código de verificação não é valido"
             );
@@ -204,5 +204,4 @@ class Auth extends Model
         $user->save();
         return true;
     }
-
 }

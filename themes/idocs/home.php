@@ -1,4 +1,4 @@
-<?php $this->layout("_theme", ["head" => $head]); ?>
+<?php $this->layout("_theme", ["head" => $head, "user" => $user]); ?>
 
 <div class="container-fluid" id="section-container">
     <div class="row">

@@ -20,7 +20,7 @@ class Sector extends Model
     public function __construct()
     {
         parent::__construct(
-            "sectores",
+            "sectors",
             ["id"],
             ["companies_id", "name"]
         );

@@ -5,48 +5,26 @@ namespace Source\App;
 use Source\Core\Connect;
 use Source\Core\Controller;
 use Source\Models\Auth;
-use Source\Models\Category;
-use Source\Models\Company;
-use Source\Models\Faq\Question;
-use Source\Models\Post;
 use Source\Models\User;
-use Source\Support\Pager;
+use Source\Support\Message;
 
 /**
- * Class Web Controller
+ * Class AuthController Controller
  *
  * @package Source\App
  * @author  Joab T. Alencar <contato@joabtorres.com.br>
  * @version 1.0
  */
-class Web extends Controller
+class AuthController extends Controller
 {
     /**
-     * Web construct
+     * AuthController construct
      */
     public function __construct()
     {
         //redirect("/ops/manutencao");
         Connect::getInstance();
         parent::__construct(__DIR__ . "/../../themes/" . CONF_VIEW_THEME . "/");
-    }
-
-    /**
-     * SITE HOME
-     *
-     * @return void
-     */
-    public function home(): void
-    {
-        $head = $this->seo->render(
-            CONF_SITE_NAME . " - " . CONF_SITE_TITLE,
-            CONF_SITE_DESC,
-            url(),
-            theme("/assets/images/share.jpg")
-        );
-        echo $this->view->render("home", [
-            "head" => $head
-        ]);
     }
 
     /**
@@ -79,7 +57,7 @@ class Web extends Controller
             $login = $auth->login($data['email'], $data['password'], $save);
 
             if ($login) {
-                $json['redirect'] = url("/app");
+                $json['redirect'] = url("/");
             } else {
                 $json['message'] = $auth->message()->render();
             }
@@ -100,7 +78,21 @@ class Web extends Controller
     }
 
     /**
-     * SITE FORGET
+     * LOGOUT
+     * @return void
+     */
+    public function logout()
+    {
+        (new Message())->info(
+            "Você saiu com sucesso " . Auth::user()->first_name . " volte logo :)"
+        )->flash();
+
+        Auth::logout();
+        redirect("/entrar");
+    }
+
+    /**
+     * FORGET
      *
      * @param null|array $data
      *
@@ -140,7 +132,7 @@ class Web extends Controller
             url("/recuperar"),
             theme("/assets/images/share.jpg")
         );
-        echo $this->view->render("auth-forget", [
+        echo $this->view->render("auth/auth-forget", [
             "head" => $head
         ]);
     }
@@ -182,7 +174,7 @@ class Web extends Controller
                 $data['password_re']
             )) {
                 $this->message->success(
-                    "Senha alterada com sucesso. Vamos controlar?"
+                    "Senha alterada com sucesso. Vamos logar?"
                 )->flash();
                 $json['redirect'] = url("/entrar");
             } else {
@@ -199,7 +191,7 @@ class Web extends Controller
             theme("/assets/images/share.jpg")
         );
 
-        echo $this->view->render("auth-reset", [
+        echo $this->view->render("auth/auth-reset", [
             "head" => $head,
             "code" => $data['code']
         ]);
@@ -284,42 +276,6 @@ class Web extends Controller
     }
 
     /**
-     * SITE SUCCESS
-     *
-     * @param array $data
-     *
-     * @return void
-     */
-    public function success(array $data): void
-    {
-        $email = base64_decode($data['email']);
-        $user = (new User())->findByEmail($email);
-
-        if ($user && $user->status != "confirmed") {
-            $user->status = "confirmed";
-            $user->save();
-        }
-
-        $head = $this->seo->render(
-            "Bem vindo(a) ao " . CONF_SITE_NAME,
-            CONF_SITE_DESC,
-            url("/obrigado"),
-            theme("/assets/images/share.jpg")
-        );
-        echo $this->view->render("optin", [
-            "head" => $head,
-            "data" => (object)[
-                "title" => "Tudo pronto. Você já pode controlar :)",
-                "desc" => "Bem-vindo(a) ao seu controle de contas, vamos tomar um café?",
-                "image" => theme("/assets/images/optin-success.jpg"),
-                "link" => url("/entrar"),
-                "linkTitle" => "Fazer Login"
-            ]
-
-        ]);
-    }
-
-    /**
      * SITE TERMOS
      *
      * @return void
@@ -337,56 +293,4 @@ class Web extends Controller
         ]);
     }
 
-    /**
-     * SITE ERROR
-     *
-     * @param array $data
-     *
-     * @return void
-     */
-    public function error(array $data): void
-    {
-        $error = new \stdClass();
-
-        switch ($data['errcode']) {
-            case "problemas":
-                $error->code = "OPS";
-                $error->title = "Estamos enfrentando problemas!";
-                $error->message
-                    = "Parece que nosso serviço não está disponível no momento. Já estamos vendo isso, mas caso precise envie um e-mail :)";
-                $error->linkTitle = "ENVIAR E-MAIL";
-                $error->link = "mailto: " . CONF_MAIL_SUPPORT;
-                break;
-            case "manutencao":
-                $error->code = "OPS";
-                $error->title = "Desculpe. Estamos em manutenção!";
-                $error->message
-                    = "Voltamos logo! Por hora estamos trabalhando para melhorar nosso conteúdo para você controlar melhor as suas contas :P";
-                $error->linkTitle = null;
-                $error->link = null;
-                break;
-            default:
-                $error->code = $data['errcode'];
-                $error->title = "Ooops. Conteúdo Indisponível :/";
-                $error->message
-                    = "Sentimos muito, mas o conteúdo que você tentou acessar não existe, está indisponível no momento ou foi removido :/";
-                $error->linkTitle = "Continue navegando";
-                $error->link = url_back();
-                break;
-        }
-
-        $head = $this->seo->render(
-            "{$error->code} | {$error->title}",
-            $error->message,
-            url_back("/ops/{$error->code}"),
-            theme("/assets/images/share.jpg"),
-            false
-        );
-
-
-        echo $this->view->render("error", [
-            "head" => $head,
-            "error" => $error
-        ]);
-    }
 }

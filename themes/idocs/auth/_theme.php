@@ -16,6 +16,12 @@
 </head>
 
 <body>
+    <div class="ajax_load">
+        <div class="ajax_load_box">
+            <div class="ajax_load_box_circle"></div>
+            <p class="ajax_load_box_title">Aguarde, carregando...</p>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-7 bg-light d-flex align-items-center justify-content-center" id="content-logo">
@@ -29,7 +35,7 @@
                     <?= $this->section("content"); ?>
                 </div>
                 <footer class="text-center text-secondary">
-                    <i class="fa-solid fa-copyright"></i> 2023 - Desenvolvido com <i class="fa-solid fa-heart text-danger"></i> por <a href="#" class="text-decoration-none">Joab
+                    <i class="fa-solid fa-copyright"></i> 2023 - Desenvolvido com <i class="fa-solid fa-heart text-danger"></i> por <a href="https://joabtorres.com.br/" target="_blank" class="text-decoration-none">Joab
                         Torres</a>
                 </footer>
             </div>
@@ -37,8 +43,8 @@
 
     </div>
 
-    <script src="<?= theme("assets/js/bootstrap/bootstrap.bundle.min.js") ?>"></script>
-    <script src="<?= theme("assets/js/script.js") ?>"></script>
+    <script src="<?= theme("/assets/scripts_minify.js"); ?>"></script>
+    <?= $this->section("scripts"); ?>
 </body>
 
 </html>

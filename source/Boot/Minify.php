@@ -34,6 +34,7 @@ if (strpos(url(), "localhost")) {
      */
     $minJS = new \MatthiasMullie\Minify\JS();
     $minJS->add(__DIR__ . "/../../shared/js/jquery-3.1.1.min.js");
+    $minJS->add(__DIR__ . "/../../shared/js/jquery.form.js");
     $minJS->add(__DIR__ . "/../../shared/js/jquery-ui/jquery-ui.min.js");
     $minJS->add(__DIR__ . "/../../shared/js/select2/select2.min.js");
     $minJS->add(__DIR__ . "/../../shared/js/bootstrap/bootstrap.min.js");

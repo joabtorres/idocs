@@ -4,16 +4,33 @@ namespace Source\App;
 
 use Source\Core\Connect;
 use Source\Core\Controller;
+use Source\Models\Auth;
+use Source\Support\Message;
 
-class Document extends Controller
+/**
+ * Class DocumentController Controller
+ *
+ * @package Source\App
+ * @author  Joab T. Alencar <contato@joabtorres.com.br>
+ * @version 1.0
+ */
+
+class DocumentController extends Controller
 {
     /**
-     * Web construct
+     * DocumentController construct
      */
     public function __construct()
     {
         Connect::getInstance();
         parent::__construct(__DIR__ . "/../../themes/" . CONF_VIEW_THEME . "/");
+        //RESTRIÇÃO
+        if (!Auth::user()) {
+            (new Message())->warning(
+                "Efetue login para acessar o iDocs."
+            )->flash();
+            redirect("/entrar");
+        }
     }
 
     /**
@@ -30,12 +47,13 @@ class Document extends Controller
             theme("/assets/images/share.jpg")
         );
         echo $this->view->render("document/form-new-register", [
-            "head" => $head
+            "head" => $head,
+            "user" => Auth::user()
         ]);
     }
 
     /**
-     * Document new register
+     * Document serach registed
      *
      * @return void
      */
@@ -48,7 +66,18 @@ class Document extends Controller
             theme("/assets/images/share.jpg")
         );
         echo $this->view->render("document/search", [
-            "head" => $head
+            "head" => $head,
+            "user" => Auth::user()
         ]);
+    }
+    /**
+     * graphic function
+     *
+     * @param array|null $data
+     * @return void
+     */
+    public function graphic(?array $data): void
+    {
+        echo "controller gráfico estatisticos";
     }
 }

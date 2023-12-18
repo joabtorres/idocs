@@ -13,43 +13,66 @@ $session = new Session();
 $route = new Router(url(), "@");
 
 /**
- * WEB ROUTES
+ * Home ROUTES
  */
 $route->namespace("Source\App");
-$route->get("/", "Web@home");
+$route->get("/", "HomeController@home");
 
-//auth
+/**
+ * Auth ROUTES
+ */
 $route->group(null);
-$route->get("/entrar", "Web@login");
-$route->post("/entrar", "Web@login");
-$route->get("/cadastrar", "Web@register");
-$route->post("/cadastrar", "Web@register");
-$route->get("/recuperar", "Web@forget");
-$route->post("/recuperar", "Web@forget");
-$route->get("/recuperar/{code}", "Web@reset");
-$route->post("/recuperar/resetar", "Web@reset");
+$route->get("/entrar", "AuthController@login");
+$route->post("/entrar", "AuthController@login");
+$route->get("/sair", "AuthController@logout");
+$route->get("/recuperar", "AuthController@forget");
+$route->post("/recuperar", "AuthController@forget");
+$route->get("/recuperar/{code}", "AuthController@reset");
+$route->post("/recuperar/resetar", "AuthController@reset");
+
+/**
+ * USER ROUTES
+ */
+
+$route->get("/usuario/cadastrar", "Web@register");
+$route->post("/usuario/cadastrar", "Web@register");
 
 /**
  * COMPANY ROUTES
  */
-$route->group("/instituicao");
-$route->get("/consultar", "Company@search");
+$route->group(null);
+$route->get("/instituicao", "CompanyController@search");
+$route->get("/consultar", "CompanyController@search");
+
 
 /**
- * DOCUMENT ROUTES
+ * SECTORS ROUTES
+ */
+$route->get("/setores", "SectorController@search");
+
+/**
+ * DOCUMENTS ROUTES
  */
 
 $route->group("/documento");
-$route->get("/novo-registro", "Document@register");
-$route->get("/buscar", "Document@search");
-$route->get("/buscar/p/{page}", "Document@search");
+$route->get("/novo-registro", "DocumentController@register");
+$route->get("/consultar", "DocumentController@search");
+$route->get("/consultar/p/{page}", "DocumentController@search");
+$route->get("/grafico", "DocumentController@graphic");
+$route->get("/status-para-documentos", "DocumentController@graphic");
+$route->get("/tipos-de-documentos", "DocumentController@graphic");
 
+
+
+/**
+ * SECTORS ROUTES
+ */
 
 /**
  * ERROR ROUTES [400, 404,405, 501]
  */
 $route->namespace("Source\App")->group("/ops");
-$route->get("/{errcode}", "Web@error");
+$route->get("/{errcode}", "ErrorController@error");
 
 /**
  * ROUTE

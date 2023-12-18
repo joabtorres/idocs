@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/12/2023 às 23:58
+-- Tempo de geração: 18/12/2023 às 11:00
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `companies` (
   `id` int(10) UNSIGNED NOT NULL,
-  `fullname` varchar(255) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
   `cnpj` varchar(255) DEFAULT NULL,
   `address` text DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `companies` (
 -- Despejando dados para a tabela `companies`
 --
 
-INSERT INTO `companies` (`id`, `fullname`, `cnpj`, `address`, `phone`, `email`, `created_at`, `updated_at`) VALUES
+INSERT INTO `companies` (`id`, `full_name`, `cnpj`, `address`, `phone`, `email`, `created_at`, `updated_at`) VALUES
 (1, 'IFPA - CAMPUS CASTANHAL', '11.284.470/0001-55', 'TV. AMAPA Q E1, LOTE 4, IMPERADOR, CASTANHAL-PA', '(91) 3518-5252', 'castanhal@ifpa.edu.gov.br', '2023-12-14 22:27:39', '2023-12-14 22:28:57');
 
 -- --------------------------------------------------------
@@ -157,12 +157,21 @@ CREATE TABLE `users` (
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'registered',
   `password` varchar(255) NOT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
+  `forget` varchar(255) NOT NULL,
+  `photo` varchar(255) DEFAULT NULL,
   `sectors_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `status`, `password`, `forget`, `photo`, `sectors_id`, `created_at`, `updated_at`) VALUES
+(1, 'Joab', 'T. Alencar', 'joabtorres1508@gmail.com', 'registered', '$2y$10$w/wf5At4zvIAsFvmH/cA.exD7iSSnaGJIjiDBqizBMEq9tj5VapC6', '', NULL, 1, '2023-12-16 17:39:25', '2023-12-16 19:26:03');
 
 --
 -- Índices para tabelas despejadas
@@ -278,7 +287,7 @@ ALTER TABLE `sectors`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para tabelas despejadas

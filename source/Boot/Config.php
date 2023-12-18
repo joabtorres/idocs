@@ -59,11 +59,11 @@ define("CONF_PASSWD_OPTION", ["cost" => 10]);
 /**
  * MESSAGE
  */
-define("CONF_MESSAGE_CLASS", "message");
-define("CONF_MESSAGE_INFO", "info icon-info");
-define("CONF_MESSAGE_SUCCESS", "success icon-check-square-o");
-define("CONF_MESSAGE_WARNING", "warning icon-warning");
-define("CONF_MESSAGE_ERROR", "error icon-warning");
+define("CONF_MESSAGE_CLASS", "p-2 mt-2 mb-2 text-center");
+define("CONF_MESSAGE_INFO", "bg-info");
+define("CONF_MESSAGE_SUCCESS", "bg-success");
+define("CONF_MESSAGE_WARNING", "bg-warning");
+define("CONF_MESSAGE_ERROR", "bg-danger");
 
 /**
  * VIEW
@@ -93,7 +93,7 @@ define("CONF_IMAGE_QUALITY", ["jpg" => 75, "png" => 5]);
 define("CONF_MAIL_HOST", "smtp.sendgrid.net");
 define("CONF_MAIL_PORT", "587");
 define("CONF_MAIL_USER", "apikey");
-define("CONF_MAIL_PASS", "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");
+define("CONF_MAIL_PASS", "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");
 define("CONF_MAIL_SENDER", ["name" => "Joab T. Alencar", "address" => "contato@joabtorres.com.br"]);
 define("CONF_MAIL_SUPPORT", "contato@joabtorres.com.br");
 define("CONF_MAIL_OPTION_LANG", "br");

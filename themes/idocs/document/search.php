@@ -1,4 +1,4 @@
-<?php $this->layout("_theme", ["head" => $head]); ?>
+<?php $this->layout("_theme", ["head" => $head, "user" => $user]); ?>
 
 <div class="container-fluid">
     <div class="row">
@@ -208,7 +208,7 @@ if (isset($protocolagens) && is_array($protocolagens)) :
                         <p class="text-justify text-danger"><span class="font-bold">OBS : </span> Ao clicar em "Excluir", este registro e todos registos relacionados ao mesmo deixaram de existir no sistema.</p>
                     </article>
                     <footer class="modal-footer">
-                        <a class="btn btn-danger pull-left" href="<?php echo BASE_URL . 'protocolo/excluirprotocolo/' . md5($indice['id']) ?>"> <i class="fa fa-trash"></i> Excluir</a>
+                        <a class="btn btn-danger pull-left" href="<?= url($indice['id']) ?>"> <i class="fa fa-trash"></i> Excluir</a>
                         <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
                     </footer>
                 </section>
